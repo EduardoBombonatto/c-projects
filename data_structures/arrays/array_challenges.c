@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+//invert the arraya
 int* reverseArray(int* arr, int n)
 {
     int start = 0;
@@ -31,6 +32,7 @@ int* leftRotate(int* arr, int d, int n)
     return rotatedArr;
 }
 
+//counting the number of times each query string occurs in the string list
 int* matchingStrings(char** stringList, int stringListCount, char** queries, int queriesCount, int* result_count)
 {
     int* results = (int*)malloc(queriesCount * sizeof(int));
@@ -50,28 +52,35 @@ int* matchingStrings(char** stringList, int stringListCount, char** queries, int
     return results;
 }
 
+
+//remove duplicates from a sorted array
+void removeDuplicateSortedArray(int* arr, int* n)
+{
+    if (*n == 0 || *n == 1)
+        return;
+    
+    int j = 0;
+    for (int i = 0; i < *n - 1; i++)
+    {
+        if (arr[i] != arr[i + 1])
+        {
+            arr[j++] = arr[i];
+        }
+    }
+    arr[j++] = arr[*n - 1];
+    *n = j;
+}
+
 int main()
 {
-    int stringListCount = 3;
-    int queriesCount = 3;
-    char** stringList = (char**) malloc(stringListCount * sizeof(char*));\
-    stringList[0] = "def";
-    stringList[1] = "de";
-    stringList[2] = "fgh";
-    char** queries = (char**) malloc(queriesCount * sizeof(char*));
-    queries[0] = "de";
-    queries[1] = "lmn";
-    queries[2] = "fgh";
-    int res_count;
-    int* results = matchingStrings(stringList, stringListCount, queries, queriesCount, &res_count);
-
-    for (int i = 0; i < res_count; i++)
+    int arr[] = {1, 2, 2, 3, 4, 4, 5};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    removeDuplicateSortedArray(arr, &n);
+    printf("Array after removing duplicates: ");
+    for (int i = 0; i < n; i++)
     {
-        printf("%d ", results[i]);
+        printf("%d ", arr[i]);
     }
     printf("\n");
-    free(results);
-    free(stringList);
-    free(queries);
     return 0;
 }
