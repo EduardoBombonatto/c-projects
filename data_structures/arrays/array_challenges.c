@@ -52,6 +52,26 @@ int* matchingStrings(char** stringList, int stringListCount, char** queries, int
     return results;
 }
 
+//find the second biggest element in the array
+int secondBiggest(int* arr, int n)
+{
+    int first, second;
+    first = second = -2147483648; // Minimum integer value
+
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] > first)
+        {
+            second = first;
+            first = arr[i];
+        }
+        else if (arr[i] > second && arr[i] != first)
+        {
+            second = arr[i];
+        }
+    }
+    return second;
+}
 
 //remove duplicates from a sorted array
 void removeDuplicateSortedArray(int* arr, int* n)
