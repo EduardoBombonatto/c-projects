@@ -21,21 +21,21 @@ Node *createNode(int val)
 }
 
 // insert at the head of the list
-Node *insertHead(Node *head, int x)
+Node *insertHead(Node *list, int x)
 {
     Node *new = createNode(x);
-    new->next = head;
+    new->next = list;
     return new;
 }
 
 // free the memory of the list
-void freeMemory(Node *head)
+void freeMemory(Node *list)
 {
     Node *aux;
-    while (head != NULL)
+    while (list != NULL)
     {
-        aux = head;
-        head = head->next;
+        aux = list;
+        list = list->next;
         free(aux);
     }
 }
@@ -51,13 +51,32 @@ void printList(Node *list)
     printf("NULL\n");
 }
 
+// insert at the tail of the linked list
+Node *insertTail(Node *list, int x)
+{
+    Node *new = createNode(x);
+    if (new == NULL)
+        return list;
+
+    if (list == NULL)
+        return new;
+
+    Node *aux = list;
+    while (aux->next != NULL)
+    {
+        aux = aux->next;
+    }
+    aux->next = new;
+    return list;
+}
+
 int main()
 {
     Node *head = NULL;
     head = insertHead(head, 4);
     head = insertHead(head, 3);
     head = insertHead(head, 2);
-    head = insertHead(head, 1);
+    head = insertTail(head, 1);
     printList(head);
     freeMemory(head);
     return 0;
