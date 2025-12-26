@@ -97,6 +97,7 @@ Node *insertAtPosition(Node *list, int x, int pos)
     return list;
 }
 
+// delete a node at a specific position in the linked list
 Node *deleteNode(Node *list , int pos)
 {
     if (list == NULL)
@@ -127,6 +128,16 @@ Node *deleteNode(Node *list , int pos)
     return list;
 }
 
+void printReverse(Node *list)
+{
+    if (list == NULL)
+        return;
+    
+    printReverse(list->next);
+    printf("%d -> ", list->val);
+    return;
+}
+
 int main()
 {
     Node *head = NULL;
@@ -136,6 +147,8 @@ int main()
     head = insertTail(head, 1);
     head = insertAtPosition(head, 5, 2); // Insert 5 at position 2
     printList(head);
+    printReverse(head);
+    printf("NULL\n");
     freeMemory(head);
     return 0;
 }
