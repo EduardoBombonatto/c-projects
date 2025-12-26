@@ -97,6 +97,36 @@ Node *insertAtPosition(Node *list, int x, int pos)
     return list;
 }
 
+Node *deleteNode(Node *list , int pos)
+{
+    if (list == NULL)
+        return NULL;
+
+    if (pos == 0)
+    {
+        Node *temp = list;
+        list = list->next;
+        free(temp);
+        return list;
+    }
+
+    Node *aux = list;
+    for (int i = 0; i < pos - 1; i++)
+    {
+        if (aux->next == NULL)
+            return list; // position is out of bounds
+        aux = aux->next;
+    }
+
+    Node *temp = aux->next;
+    if (temp != NULL)
+    {
+        aux->next = temp->next;
+        free(temp);
+    }
+    return list;
+}
+
 int main()
 {
     Node *head = NULL;
