@@ -70,6 +70,33 @@ Node *insertTail(Node *list, int x)
     return list;
 }
 
+// insert at a specific position in the linked list
+Node *insertAtPosition(Node *list, int x, int pos)
+{
+    if (pos == 0)
+    {
+        return insertHead(list, x);
+    }
+
+    Node *new = createNode(x);
+    if (new == NULL)
+        return list;
+    
+    Node *aux = list;
+    for (int i = 0; i < pos - 1; i++)
+    {
+        if (aux == NULL)
+        {
+            free(new);
+            return list; // position is out of bounds
+        }
+        aux = aux->next;
+    }
+    new->next = aux->next;
+    aux->next = new;
+    return list;
+}
+
 int main()
 {
     Node *head = NULL;
@@ -77,6 +104,7 @@ int main()
     head = insertHead(head, 3);
     head = insertHead(head, 2);
     head = insertTail(head, 1);
+    head = insertAtPosition(head, 5, 2); // Insert 5 at position 2
     printList(head);
     freeMemory(head);
     return 0;
