@@ -128,6 +128,7 @@ Node *deleteNode(Node *list , int pos)
     return list;
 }
 
+// print the linked list in reverse order
 void printReverse(Node *list)
 {
     if (list == NULL)
@@ -137,6 +138,21 @@ void printReverse(Node *list)
     printf("%d -> ", list->val);
     return;
 }
+// reverse the linked list
+Node *reverseList(Node *head)
+{
+    Node *prev = NULL, *next = NULL;
+    Node *current = head;
+    
+    while (current != NULL)
+    {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    return prev;
+}
 
 int main()
 {
@@ -145,10 +161,12 @@ int main()
     head = insertHead(head, 3);
     head = insertHead(head, 2);
     head = insertTail(head, 1);
-    head = insertAtPosition(head, 5, 2); // Insert 5 at position 2
+    head = insertAtPosition(head, 5, 2); 
     printList(head);
-    printReverse(head);
-    printf("NULL\n");
+    head = reverseList(head);
+    printList(head);
+    head = reverseList(head);
+    printList(head);
     freeMemory(head);
     return 0;
 }
