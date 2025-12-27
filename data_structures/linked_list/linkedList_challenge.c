@@ -154,6 +154,21 @@ Node *reverseList(Node *head)
     return prev;
 }
 
+int compareTwoLinkedList(Node *list1, Node *list2)
+{
+    while (list1 != NULL && list2 != NULL)
+    {
+        if (list1->val != list2->val)
+            return 0;
+        list1 = list1->next;
+        list2 = list2->next;
+    }
+    if (list1 == NULL && list2 == NULL)
+        return 1;
+    else
+        return 0;
+}
+
 int main()
 {
     Node *head = NULL;
@@ -163,10 +178,17 @@ int main()
     head = insertTail(head, 1);
     head = insertAtPosition(head, 5, 2); 
     printList(head);
-    head = reverseList(head);
-    printList(head);
-    head = reverseList(head);
-    printList(head);
+
+    Node *head2 = NULL;
+    head2 = insertHead(head2, 4);
+    head2 = insertHead(head2, 3);
+    head2 = insertHead(head2, 2);
+    head2 = insertTail(head2, 1);
+    head2 = insertAtPosition(head2, 5, 2);
+    printList(head2);
+
+    printf("Are the two lists equal? %s\n", compareTwoLinkedList(head, head2) ? "Yes" : "No");
     freeMemory(head);
+    freeMemory(head2);
     return 0;
 }
