@@ -169,26 +169,64 @@ int compareTwoLinkedList(Node *list1, Node *list2)
         return 0;
 }
 
+// merge two sorted linked lists
+Node *mergeTwoSortedLinkedList(Node *list1, Node *list2)
+{
+    if (list1 == NULL)
+        return list2;
+    if (list2 == NULL)
+        return list1;
+
+    Node *mergedList = NULL;
+    while (list1 != NULL && list2 != NULL)
+    {
+        if (list1->val < list2->val)
+        {
+            mergedList = insertTail(mergedList, list1->val);
+            list1 = list1->next;
+        }
+        else
+        {
+            mergedList = insertTail(mergedList, list2->val);
+            list2 = list2->next;
+        }
+    }
+
+    // append the remaining elements
+    while (list1 != NULL)
+    {
+        mergedList = insertTail(mergedList, list1->val);
+        list1 = list1->next;
+    }
+    while (list2 != NULL)
+    {
+        mergedList = insertTail(mergedList, list2->val);
+        list2 = list2->next;
+    }
+
+    return mergedList;
+}
+
 int main()
 {
     Node *head = NULL;
     head = insertHead(head, 4);
     head = insertHead(head, 3);
     head = insertHead(head, 2);
-    head = insertTail(head, 1);
-    head = insertAtPosition(head, 5, 2); 
+    head = insertTail(head, 5);
     printList(head);
 
     Node *head2 = NULL;
-    head2 = insertHead(head2, 4);
-    head2 = insertHead(head2, 3);
-    head2 = insertHead(head2, 2);
-    head2 = insertTail(head2, 1);
-    head2 = insertAtPosition(head2, 5, 2);
+    head2 = insertHead(head2, 8);
+    head2 = insertHead(head2, 7);
+    head2 = insertHead(head2, 6);
+    head2 = insertTail(head2, 9);
     printList(head2);
 
-    printf("Are the two lists equal? %s\n", compareTwoLinkedList(head, head2) ? "Yes" : "No");
+    Node *mergedList = mergeTwoSortedLinkedList(head, head2);
+    printList(mergedList);
     freeMemory(head);
     freeMemory(head2);
+    freeMemory(mergedList);
     return 0;
 }
