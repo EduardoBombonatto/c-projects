@@ -207,6 +207,26 @@ Node *mergeTwoSortedLinkedList(Node *list1, Node *list2)
     return mergedList;
 }
 
+
+// get node from X positions from the end
+int getNodeFromTail(Node *list, int pos)
+{
+    Node *fast = list;
+    Node *slow = list;
+
+    for (int i = 0; i < pos; i++)
+    {
+        if (fast == NULL)
+            return -1; // position is out of bounds
+        fast = fast->next;
+    }
+    while(fast->next != NULL)
+    {
+        fast = fast->next;
+        slow = slow->next;
+    }
+    return slow->val;
+}
 int main()
 {
     Node *head = NULL;
@@ -215,18 +235,8 @@ int main()
     head = insertHead(head, 2);
     head = insertTail(head, 5);
     printList(head);
-
-    Node *head2 = NULL;
-    head2 = insertHead(head2, 8);
-    head2 = insertHead(head2, 7);
-    head2 = insertHead(head2, 6);
-    head2 = insertTail(head2, 9);
-    printList(head2);
-
-    Node *mergedList = mergeTwoSortedLinkedList(head, head2);
-    printList(mergedList);
+    printf("Node at position 2 from tail: %d\n", getNodeFromTail(head, 2));
     freeMemory(head);
-    freeMemory(head2);
-    freeMemory(mergedList);
+
     return 0;
 }
