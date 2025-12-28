@@ -227,15 +227,42 @@ int getNodeFromTail(Node *list, int pos)
     }
     return slow->val;
 }
+
+Node *removeDuplicate(Node *list)
+{
+    Node *current = list;
+    Node *next_next;
+
+    if (current == NULL)
+        return NULL;
+    
+    while (current->next != NULL)
+    {
+        if (current->val == current->next->val)
+        {
+            next_next = current->next->next;
+            free(current->next);
+            current->next = next_next;
+        }
+        else
+        {
+            current = current->next;
+        }
+    }
+    return list;
+}
 int main()
 {
     Node *head = NULL;
     head = insertHead(head, 4);
     head = insertHead(head, 3);
     head = insertHead(head, 2);
+    head = insertHead(head, 2);
     head = insertTail(head, 5);
     printList(head);
     printf("Node at position 2 from tail: %d\n", getNodeFromTail(head, 2));
+    head = removeDuplicate(head);
+    printList(head);
     freeMemory(head);
 
     return 0;
