@@ -8,47 +8,49 @@ typedef struct Node
     struct Node *right;
 } Node;
 
-Node *insert(Node *root, int val)
+Node *insert(int arr[], int inicio, int fim)
+{
+    if (inicio > fim)
+        return NULL;
+
+    int meio = (inicio + fim) / 2;
+
+    Node *root = (Node *)malloc(sizeof(Node));
+    root->val = arr[meio];
+    root->left = insert(arr, inicio, meio - 1);
+    root->right = insert(arr, meio + 1, fim);
+
+    return root;
+}
+
+void inOrder(Node *root)
 {
     if (root == NULL)
-    {
-        Node *new = (Node *)malloc(sizeof(Node));
-        new->val = val;
-        new->left = NULL;
-        new->right = NULL;
-        return new;
-    }
-    else
-    {
-        Node *cur;
-        if (val <= root->val)
-        {
-            cur = insert(root->left, val);
-            root->left = cur;
-        }
-        else
-        {
-            cur = insert(root->right, val);
-            root->right = cur;
-        }
-    }
-    return root;
+        return;
+
+    printf("%d ", root->val);
+    inOrder(root->left);
+    inOrder(root->right);
 }
 
 int main()
 {
-    Node *root = NULL;
-
     int t;
-    int data;
-
     scanf("%d", &t);
 
-    while (t-- > 0)
+    int *vetor = (int *)malloc(t * sizeof(int));
+
+    for (int i = 0; i < t; i++)
     {
-        scanf("%d", &data);
-        root = insert(root, data);
+        scanf("%d", &vetor[i]);
     }
 
+    Node *root = insert(vetor, 0, t - 1);
+
+    printf("inOrder: ");
+    inOrder(root); // Agora vai imprimir: 4 2 1 3 6 5 7
+    printf("\n");
+
+    free(vetor); // Libera o vetor auxiliar
     return 0;
 }
