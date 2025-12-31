@@ -45,6 +45,17 @@ void inOrder(Node *root)
     inOrder(root->right);
 }
 
+// print tree post order
+void postOrder(Node *root)
+{
+    if (root == NULL)
+        return;
+
+    postOrder(root->left);
+    postOrder(root->right);
+    printf("%d ", root->val);
+}
+
 // free the memory allocated to the tree
 void freeTree(Node *root)
 {
@@ -58,17 +69,12 @@ void freeTree(Node *root)
 
 int main()
 {
-    int t;
-    scanf("%d", &t);
 
-    int *vetor = (int *)malloc(t * sizeof(int));
+    Node *root = NULL;
 
-    for (int i = 0; i < t; i++)
-    {
-        scanf("%d", &vetor[i]);
-    }
-
-    Node *root = insert(vetor, 0, t - 1);
+    int values[] = {1, 2, 3, 4, 5, 6, 7};
+    int t = sizeof(values) / sizeof(values[0]);
+    root = insert(values, 0, t - 1);
 
     printf("inOrder: ");
     inOrder(root);
@@ -78,7 +84,10 @@ int main()
     preOrder(root);
     printf("\n");
 
-    free(vetor);
+    printf("postOrder: ");
+    postOrder(root);
+    printf("\n");
+
     free(root);
     return 0;
 }
