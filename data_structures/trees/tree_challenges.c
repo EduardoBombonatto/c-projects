@@ -23,14 +23,37 @@ Node *insert(int arr[], int inicio, int fim)
     return root;
 }
 
-void inOrder(Node *root)
+// print tree in order
+void preOrder(Node *root)
 {
     if (root == NULL)
         return;
 
     printf("%d ", root->val);
+    preOrder(root->left);
+    preOrder(root->right);
+}
+
+// print tree pre order
+void inOrder(Node *root)
+{
+    if (root == NULL)
+        return;
+
     inOrder(root->left);
+    printf("%d ", root->val);
     inOrder(root->right);
+}
+
+// free the memory allocated to the tree
+void freeTree(Node *root)
+{
+    if (root == NULL)
+        return;
+
+    freeTree(root->left);
+    freeTree(root->right);
+    free(root);
 }
 
 int main()
@@ -48,9 +71,14 @@ int main()
     Node *root = insert(vetor, 0, t - 1);
 
     printf("inOrder: ");
-    inOrder(root); // Agora vai imprimir: 4 2 1 3 6 5 7
+    inOrder(root);
     printf("\n");
 
-    free(vetor); // Libera o vetor auxiliar
+    printf("preOrder: ");
+    preOrder(root);
+    printf("\n");
+
+    free(vetor);
+    free(root);
     return 0;
 }
